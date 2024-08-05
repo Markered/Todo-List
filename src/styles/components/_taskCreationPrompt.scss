@@ -1,0 +1,130 @@
+@import '../variables//colorPallete';
+
+.task-prompt {
+    margin: 0 auto;
+    background-color: $color-surface-dark;
+    width: clamp(300px, 30%, 500px);
+    &__title {
+        
+    }
+
+    &__form {
+
+    }
+
+    &__section {
+        margin: 20px 0px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        margin-bottom: 10px;
+        font-size: 16px;
+
+        &--optional {
+            color: $color-surface-mixed-light;
+            font-size: 12px;
+        }
+
+        &--required {
+            color: $color-primary-light;
+            font-size: 12px;
+        }
+    }
+
+    &__input {
+        background-color: $color-surface-medium-dark;
+        font-size: 18px;
+        border: 1px solid $color-surface-mixed-light;
+        width: 100%;
+        padding: 10px 5px;
+        height: 18px;
+        outline: none;
+        height: 40px;
+
+        &:focus {
+            border: 1px solid $color-surface-mixed-lightest;
+        }
+    }
+
+    &__textarea {
+        background-color: $color-surface-medium-dark;
+        width: 100%;
+        font-size: 18px;
+        height: 18px;
+        padding: 10px 5px;
+        resize: none;
+        overflow: hidden;
+        outline: none;
+        border: 1px solid $color-surface-mixed-light;
+        height: 40px;
+
+        &:focus {
+            border: 1px solid $color-surface-mixed-lightest;
+        }
+    }
+    &__subtask-input-container {
+        display: flex;
+        gap: 10px;
+    }
+
+    &__priority {
+
+    }
+
+    &__priority-button {
+        background-color: $color-surface-medium-dark;
+        width: 100px;
+        font-size: 18px;
+        padding: 10px 5px;
+        margin-right: 10px;
+        &.selected {
+            color: $color-surface-dark;
+            background-color: $color-primary-light;
+        }
+    }
+
+    &__add-subtask-button {
+        height: 40px;
+        width: 40px;
+        background-color: $color-primary-light;
+    }
+
+    &__subtask-list {
+        border-top: 1px solid $color-surface-mixed-light;
+        margin-top: 10px;
+    }
+
+    &__actions {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        gap: 20px;
+    }
+    &__submit-button {
+        margin-left: 0 auto;
+        background-color: $color-primary-light;
+        color: $color-surface-dark;
+        font-size: 18px;
+        padding: 10px 12px;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    }
+
+    &__cancel-button {
+        background-color: transparent;
+        font-size: 18px;
+        padding: 10px 12px;
+        border: 1px solid $color-primary-light;
+        color: $color-primary-light;
+
+        &:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+    }
+}
