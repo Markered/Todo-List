@@ -4,12 +4,27 @@
 body {
     background-color: $color-surface-darkest;
 }
+
+main {
+    margin: 0 auto;
+    width: 1000px;
+}
 * {
     margin: 0;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
     border: none;
     transition: all 0.15s;
-    border-radius: 10px;
+    border-radius: 8px;
     box-sizing: border-box;
+}
+
+ul, ol {
+    list-style: none;
+    padding-left: 0;
+}
+
+.todoListContainer {
+    display: grid;
+    gap: 10px;
 }

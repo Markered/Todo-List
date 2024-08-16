@@ -1,0 +1,65 @@
+@import '../variables//colorPallete';
+
+.task-card {
+    background-color: $color-surface-dark;
+    width: clamp(300px, 50%, 500px);
+    padding: 15px 10px;
+    &:hover {
+        
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__info {
+        
+    }
+
+    &__name {
+        
+    }
+
+    &__due-date {
+        color: rgb(189, 179, 179);
+
+        &--near-due {
+            color: #f39c12;
+        }
+
+        &--overdue {
+            color: #e74c3c; 
+        }
+    }
+
+    &__badge {
+        background-color: gray;
+        padding: 5px;
+
+        &:first-child {
+            margin-right: 10px;
+        }
+    }
+
+    &__priority--high {
+        background-color: #e74c3c;
+    }
+
+    &__priority--medium {
+        background-color: #f39c12;
+    }
+
+    &__priority--low {
+        background-color: #2ecc71;
+    }
+
+    &__description {
+        margin-top: 10px;
+        color: rgb(146, 136, 136);
+        white-space: nowrap; 
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

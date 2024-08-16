@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Category, Task, Subtask, ToDoList } from './data/models';
+import { ToDoList } from './data/models';
 import TaskCreationPrompt from './components/TaskCreationPrompt';
+import TaskCard from './components/taskCard';
 
 function App() {
     const [toDoList, setToDoList] = useState(ToDoList.loadFromLocalStorage());
@@ -11,7 +12,6 @@ function App() {
 
     useEffect(() => {
         toDoList.saveToLocalStorage();
-        console.log(toDoList)
     }, [toDoList]);
 
     const addCategory = (name, color) => {
@@ -41,7 +41,7 @@ function App() {
     };
 
     return (
-        <div>
+        <main>
             <h1>To-Do List</h1>
             <div>
               <button onClick={() => addCategory(categoryName, categoryColor)}>Add Category</button>
@@ -68,15 +68,17 @@ function App() {
                 {toDoList.categories.map(category => (
                     <li key={category.name}>
                         {category.name} - {category.color}
-                        <ul>
+                        <ul className="todoListContainer">
                             {category.tasks.map((task, index) => (
-                                <li key={index}>{task.name}</li>
+                                <li key={index}>
+                                    <TaskCard taskDetails={task} category={category}/>
+                                </li>
                             ))}
                         </ul>
                     </li>
                 ))}
             </ul>
-        </div>
+        </main>
     );
 }
 

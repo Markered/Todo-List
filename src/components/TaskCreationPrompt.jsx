@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import AddIcon from '../assets/add-icon.svg';
 export default function TaskCreationPrompt( {addTask }) {
     const dialogRef = useRef(null);
@@ -7,6 +7,18 @@ export default function TaskCreationPrompt( {addTask }) {
     const [dueDate, setDueDate] = useState('');
     const [priority, setPriority] = useState('Low');
     const [subtasks, setSubtasks] = useState([]);
+
+    const handleClick = () => {
+        addTask('Primary', { 
+            name: taskName, 
+            description: description, 
+            dueDate: dueDate, 
+            priority: priority, 
+            subtasks: subtasks, 
+            isCompleted: false, 
+            creationDate: new Date() 
+        });
+    }
 
     const handleCancel = () => {
         if (dialogRef.current) {
@@ -101,7 +113,7 @@ export default function TaskCreationPrompt( {addTask }) {
                 </section>
 
                 <section className="task-prompt__actions">
-                    <button className="task-prompt__submit-button" type="submit">
+                    <button className="task-prompt__submit-button" type="submit" onClick={handleClick}>
                         Add Task
                     </button>
                     <button className="task-prompt__cancel-button" onClick={handleCancel}>

@@ -2,11 +2,11 @@ class Category {
     constructor(name, color, tasks = []) {
         this.name = name;
         this.color = color;
-        this.tasks = tasks.map(task => new Task(task.name, task.dueDate, task.priority, task.subtasks, task.isCompleted));
+        this.tasks = tasks.map(task => new Task(task.name, task.description, task.dueDate, task.priority, task.subtasks, task.isCompleted, task.creationDate));
     }
 
     addTask(task) {
-        this.tasks.push(new Task(task.name, task.dueDate, task.priority, task.subtasks, task.isCompleted));
+        this.tasks.push(new Task(task.name, task.description, task.dueDate, task.priority, task.subtasks, task.isCompleted, task.creationDate));
     }
 
     deleteTask(taskName) {
@@ -20,7 +20,7 @@ class Task {
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.subtasks = subtasks.map(subtask => new Subtask(subtask.name, subtask.isCompleted));
+        this.subtasks = subtasks ? subtasks.map(subtask => new Subtask(subtask.name, subtask.isCompleted)) : null;
         this.isCompleted = isCompleted;
         this.creationDate = creationDate;
     }
