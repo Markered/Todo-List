@@ -4,6 +4,8 @@
     background-color: $color-surface-dark;
     width: clamp(300px, 50%, 500px);
     padding: 15px 10px;
+    position: relative;
+    
     &:hover {
         
     }
@@ -33,13 +35,30 @@
             color: #e74c3c; 
         }
     }
-
+    &__details {
+        display: flex;
+        gap: 5px;
+    }
     &__badge {
         background-color: gray;
         padding: 5px;
+    }
 
-        &:first-child {
-            margin-right: 10px;
+    &__more-options-icon {
+        width: 27px;
+    }
+
+    &__more-options-menu {
+        position: absolute;
+        background-color: $color-surface-medium-dark;
+        right: -90px;
+
+        ol li {
+            width: 100%;
+            padding: 10px 5px;
+            &:hover {
+                background-color: $color-primary;
+            }
         }
     }
 

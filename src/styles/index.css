@@ -114,6 +114,7 @@
   background-color: #282828;
   width: clamp(300px, 50%, 500px);
   padding: 15px 10px;
+  position: relative;
 }
 .task-card__header {
   display: flex;
@@ -129,12 +130,28 @@
 .task-card__due-date--overdue {
   color: #e74c3c;
 }
+.task-card__details {
+  display: flex;
+  gap: 5px;
+}
 .task-card__badge {
   background-color: gray;
   padding: 5px;
 }
-.task-card__badge:first-child {
-  margin-right: 10px;
+.task-card__more-options-icon {
+  width: 27px;
+}
+.task-card__more-options-menu {
+  position: absolute;
+  background-color: #3f3f3f;
+  right: -90px;
+}
+.task-card__more-options-menu ol li {
+  width: 100%;
+  padding: 10px 5px;
+}
+.task-card__more-options-menu ol li:hover {
+  background-color: #7a5af5;
 }
 .task-card__priority--high {
   background-color: #e74c3c;
@@ -180,4 +197,9 @@ ul, ol {
 .todoListContainer {
   display: grid;
   gap: 10px;
+}
+
+button {
+  border: none;
+  background-color: transparent;
 }/*# sourceMappingURL=index.css.map */
