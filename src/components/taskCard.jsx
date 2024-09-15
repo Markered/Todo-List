@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import EllipsisIcon from '../icons/ellipsis-icon.svg?react';
 export default function TaskCard({ key, taskDetails, category, deleteTask, openMenuId, setOpenMenuId }) {
     const { id, name, description, dueDate, priority } = taskDetails;
 
@@ -32,9 +32,7 @@ export default function TaskCard({ key, taskDetails, category, deleteTask, openM
                             {category.name}
                         </span>
                         <button className="task-card__more-options-button" onClick={handleMoreOptionsClick}>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="task-card__more-options-icon">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
-                            </svg>
+                            <EllipsisIcon className="task-card__more-options-icon" />
                         </button>
                         {openMenuId === id && (
                             <div className="task-card__more-options-menu">
