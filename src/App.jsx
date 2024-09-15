@@ -1,22 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToDoList } from './data/models';
 import TaskCreationPrompt from './components/TaskCreationPrompt';
-import TaskCard from './components/taskCard';
+import TaskList from './components/taskList';
+
+import Layout from './components/layout';
+import Home from './components/home';
+import Categories from './components/categories';
 
 function App() {
     const [toDoList, setToDoList] = useState(ToDoList.loadFromLocalStorage());
+    const dialogRef = useRef(null);
     const [openMenuId, setOpenMenuId] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [categoryColor, setCategoryColor] = useState('#756b6b');
     const [categoryToDelete, setCategoryToDelete] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
-
+    console.log(toDoList);
     useEffect(() => {
         toDoList.saveToLocalStorage();
     }, [toDoList]);
 
     const addCategory = (name, color) => {
-        if (name && color) {
+        if (name && name !== 'All' && color) {
             toDoList.addCategory(name, color);
             setToDoList(new ToDoList(toDoList.categories));
         }
@@ -52,63 +58,66 @@ function App() {
         setSelectedCategory(selected || null);
         setCategoryToDelete('');
     };
-
+    const handleAddTask = () => {
+        if (dialogRef.current) {
+            dialogRef.current.show()
+        }
+    }
     return (
-        <main>
-            <h1>To-Do List</h1>
-            <div>
-                <button onClick={() => addCategory(categoryName, categoryColor)}>Add Category</button>
-                <input 
-                    type="text" 
-                    placeholder='Category Name' 
-                    value={categoryName} 
-                    onChange={(e) => setCategoryName(e.target.value)} 
-                />
-                <input 
-                    type="color" 
-                    value={categoryColor} 
-                    onChange={(e) => setCategoryColor(e.target.value)} 
-                />
-            </div>
+        <Router>
+            <Routes>
+                <Route path='/' element={<Layout categories={toDoList.categories}/>}>
+                    <Route path='/home' element={<Home />}/>
+                    <Route path='/categories' element={<Categories categories={toDoList.categories} />} />
+                </Route>
+            </Routes>
+        </Router>
+        // <>
+        //     <Layout categories={toDoList.categories} />
+        //     <main>
+        //         <div>
+        //             <button onClick={() => addCategory(categoryName, categoryColor)}>Add Category</button>
+        //             <input 
+        //                 type="text" 
+        //                 placeholder='Category Name' 
+        //                 value={categoryName} 
+        //                 onChange={(e) => setCategoryName(e.target.value)} 
+        //             />
+        //             <input 
+        //                 type="color" 
+        //                 value={categoryColor} 
+        //                 onChange={(e) => setCategoryColor(e.target.value)} 
+        //             />
+        //         </div>
 
-            <div>
-                <button onClick={() => deleteCategory(categoryToDelete)}>Delete Category</button>
-                <select 
-                    name='Categories' 
-                    onChange={handleCategorySelect} 
-                    value={selectedCategory ? selectedCategory.id : ''}
-                >
-                    <option value="">Select a category</option>
-                    {toDoList.categories.map((category) => (
-                        <option key={category.id} value={category.id}>{category.name}</option>
-                    ))}
-                </select>
-                <input type="hidden" value={categoryToDelete} />
-            </div>
+        //         <div>
+        //             <button onClick={() => deleteCategory(categoryToDelete)}>Delete Category</button>
+        //             <select 
+        //                 name='Categories' 
+        //                 onChange={handleCategorySelect} 
+        //                 value={selectedCategory ? selectedCategory.id : ''}
+        //             >
+        //                 <option value="">Select a category</option>
+        //                 {toDoList.categories.map((category) => (
+        //                     <option key={category.id} value={category.id}>{category.name}</option>
+        //                 ))}
+        //             </select>
+        //             <input type="hidden" value={categoryToDelete} />
+        //         </div>
+        //         <button onClick={handleAddTask}>ADD TASK</button>
+        //         <ul>
+        //             <TaskList 
+        //                 category={'All'} 
+        //                 toDoList={toDoList.categories} 
+        //                 deleteTask={deleteTask} 
+        //                 openMenuId={openMenuId} 
+        //                 setOpenMenuId={setOpenMenuId} 
+        //             />
+        //         </ul>
 
-            {selectedCategory && <TaskCreationPrompt categoryId={selectedCategory.id} addTask={addTask} />}
-
-            <ul>
-                {toDoList.categories.map(category => (
-                    <li key={category.id}>
-                        {category.name} - {category.color}
-                        <ul className="todoListContainer">
-                            {category.tasks.map(task => (
-                                <li key={task.id}>
-                                    <TaskCard 
-                                        taskDetails={task} 
-                                        category={category} 
-                                        deleteTask={deleteTask} 
-                                        openMenuId={openMenuId} 
-                                        setOpenMenuId={setOpenMenuId} 
-                                    />
-                                </li>
-                            ))}
-                        </ul>
-                    </li>
-                ))}
-            </ul>
-        </main>
+        //         {selectedCategory && <TaskCreationPrompt dialogRef={dialogRef} categoryId={selectedCategory.id} addTask={addTask} />}
+        //     </main>
+        // </>
     );
 }
 

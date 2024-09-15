@@ -1,0 +1,49 @@
+@import '../variables/colorPallete';
+
+.category-card {
+    background-color: $color-surface-darkest;
+    width: 400px;
+    padding: 10px;
+    &__progress-section {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 10px;
+        .circle-progress-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: conic-gradient(#124785 50deg, $color-surface-dark 0deg);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: relative;
+
+            &__inner-circle {
+                display: flex;
+                position: absolute;
+                width: 80px;
+                height: 80px;
+                background-color: $color-surface-medium-dark;
+                border-radius: 50%;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        .category-card__task-info {
+            display: flex;  
+            align-items: center;
+            justify-content: space-around;
+            p {
+                span {
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 22px;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+

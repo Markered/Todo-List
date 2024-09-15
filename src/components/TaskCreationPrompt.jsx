@@ -1,15 +1,56 @@
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import AddIcon from '../assets/add-icon.svg';
+import AddTaskIcon from '../icons/addTask-icon.svg?react';
 
-export default function TaskCreationPrompt({ addTask, categoryId }) {
-    const dialogRef = useRef(null);
+export default function TaskCreationPrompt({ dialogRef, addTask, categoryId }) {
     const [taskName, setTaskName] = useState('');
     const [description, setDescription] = useState('');
-    const [dueDate, setDueDate] = useState('');
+
+    const [date, setDate] = useState(() => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+        const day = (currentDate.getDate() + 1).toString().padStart(2, '0');
+      
+        return `${year}-${month}-${day}`;
+      });
+      
+    const [time, setTime] = useState('11:59 PM');
+    const [dueDate, setDueDate] = useState(Date.parse(`${date} ${time}`));
+
     const [priority, setPriority] = useState('Low');
     const [subtasks, setSubtasks] = useState([]);
     const [newSubtask, setNewSubtask] = useState('');
+
+    
+    useEffect(() => {
+        flatpickr('.task-prompt__input__date', {
+            minDate: 'today',
+            enableTime: false,
+            dateFormat: "Y-m-d",
+            altInput: true,
+            altFormat: "F j, Y",
+            defaultDate: date,
+            onChange: (_, dateStr) => {
+                setDate(dateStr);
+            }
+        });
+
+        flatpickr('.task-prompt__input__time', {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: 'h:i K',
+            time_24hr: false,
+            defaultDate: time,
+            onChange: (_, timeStr) => {
+                setTime(timeStr);
+            }
+        });
+    }, []);
+
+    useEffect(() => {
+        setDueDate(Date.parse(`${date} ${time}`));
+    }, [date, time])
 
     const handleAddSubtask = () => {
         if (newSubtask.trim() !== '') {
@@ -20,28 +61,18 @@ export default function TaskCreationPrompt({ addTask, categoryId }) {
 
     const handleClick = (e) => {
         e.preventDefault();
-        console.log({
-            id: uuidv4(),
-            name: taskName,
-            description: description,
-            dueDate: dueDate,
-            priority: priority,
-            subtasks: subtasks,
-            isCompleted: false,
-            creationDate: new Date()
-        });
         if (taskName && dueDate) {
-            addTask(categoryId, { 
+            addTask(categoryId, {
                 id: uuidv4(),
-                name: taskName, 
-                description: description, 
-                dueDate: dueDate, 
-                priority: priority, 
-                subtasks: subtasks, 
-                isCompleted: false, 
-                creationDate: new Date() 
+                name: taskName,
+                description: description,
+                dueDate: new Date(dueDate),
+                priority: priority,
+                subtasks: subtasks,
+                isCompleted: false,
+                creationDate: new Date()
             });
-            handleCancel(); // Close the dialog after adding the task
+            handleCancel();
         }
     };
 
@@ -52,106 +83,97 @@ export default function TaskCreationPrompt({ addTask, categoryId }) {
     };
 
     return (
-        <dialog className="task-prompt" ref={dialogRef} open>
-            <h2 className="task-prompt__title">Add Task</h2>
-            <form className="task-prompt__form">
-                <section className="task-prompt__section">
-                    <label className="task-prompt__label" htmlFor="task-name">Task Name <span className="task-prompt__label--required">required</span></label>
-                    <input
-                        id="task-name"
-                        className="task-prompt__input"
-                        type="text"
-                        placeholder="Name your task"
-                        value={taskName}
-                        onChange={(e) => setTaskName(e.target.value)}
-                        required
-                    />
-                </section>
-
-                <section className="task-prompt__section">
-                    <label className="task-prompt__label" htmlFor="task-description">Description <span className="task-prompt__label--optional">optional</span></label>
-                    <textarea
-                        id="task-description"
-                        className="task-prompt__textarea"
-                        placeholder="Describe your task"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </section>
-
-                <section className="task-prompt__section">
-                    <label className="task-prompt__label" htmlFor="due-date">Due Date <span className="task-prompt__label--required">required</span></label>
-                    <input
-                        id="due-date"
-                        className="task-prompt__input"
-                        type="date"
-                        value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
-                        required
-                    />
-                </section>
-
-                <section className="task-prompt__section">
-                    <label className="task-prompt__label">Priority <span className="task-prompt__label--required">required</span></label>
-                    <div className="task-prompt__priority">
-                        <button
-                            type="button"
-                            className={`task-prompt__priority-button ${priority === 'High' ? 'selected' : ''}`}
-                            onClick={() => setPriority('High')}
-                        >
-                            High
-                        </button>
-                        <button
-                            type="button"
-                            className={`task-prompt__priority-button ${priority === 'Medium' ? 'selected' : ''}`}
-                            onClick={() => setPriority('Medium')}
-                        >
-                            Medium
-                        </button>
-                        <button
-                            type="button"
-                            className={`task-prompt__priority-button ${priority === 'Low' ? 'selected' : ''}`}
-                            onClick={() => setPriority('Low')}
-                        >
-                            Low
-                        </button>
-                    </div>
-                </section>
-
-                <section className="task-prompt__section">
-                    <label className="task-prompt__label" htmlFor="subtasks">Subtasks <span className="task-prompt__label--optional">optional</span></label>
-                    <div className="task-prompt__subtask-input-container">
+        <>
+            <dialog className="task-prompt" ref={dialogRef} open>
+                
+                <header className="task-prompt__header">
+                    <AddTaskIcon className="task-prompt__header__icon" />
+                    <h2 className="task-prompt__header__title">Add Task</h2>
+                </header>
+                
+                <form className="task-prompt__form">
+                    <fieldset className="task-prompt__section">
+                        <label htmlFor="task-description">Task Name</label>
                         <input
-                            id="subtasks"
+                            id="task-name"
                             className="task-prompt__input"
                             type="text"
-                            placeholder="Add a subtask"
-                            value={newSubtask}
-                            onChange={(e) => setNewSubtask(e.target.value)}
+                            placeholder="Add task name"
+                            value={taskName}
+                            onChange={(e) => setTaskName(e.target.value)}
+                            required
                         />
-                        <button className="task-prompt__add-subtask-button" type="button" onClick={handleAddSubtask}>
-                            <img src={AddIcon} alt="Add Subtask" />
-                        </button>
-                    </div>
-                    <ul className="task-prompt__subtask-list">
-                        {subtasks.length > 0 ? subtasks.map(subtask => (
-                            <li key={subtask.id}>
-                                {subtask.name}
-                            </li>
-                        )) : <p>No subtasks</p>}
-                    </ul>
-                </section>
+                    </fieldset>
 
-                <section className="task-prompt__actions">
-                    <button className="task-prompt__submit-button" type="button" onClick={handleClick}>
-                        Add Task
-                    </button>
-                    <button className="task-prompt__cancel-button" type="button" onClick={handleCancel}>
-                        Cancel
-                    </button>
-                </section>
-                
-            </form>
-        </dialog>
+                    <fieldset className="task-prompt__section">
+                        <label htmlFor="task-description">Description</label>
+                        <textarea
+                            id="task-description"
+                            className="task-prompt__textarea"
+                            placeholder="Add description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+                    </fieldset>
+
+                    <section className="task-prompt__section task-prompt__section__due-date">
+                        <label htmlFor="task-prompt__input__date-id task-prompt__input-container--date">
+                            Due Date
+                        </label>
+                        <input
+                        id="task-prompt__input__date-id"
+                        className="task-prompt__input task-prompt__input__date"
+                        placeholder="Select Date"
+                        />
+                        
+                        <label htmlFor="task-prompt__input__time-id">
+                            Due Time
+                        </label>
+                        <input
+                            id="task-prompt__input__time-id"
+                            className="task-prompt__input task-prompt__input__time"
+                            placeholder="Select Time"
+                        />
+                    </section>
+                    
+                    <fieldset className="task-prompt__section task-prompt__section__priority">
+                        <label className="task-prompt__label">Priority</label>
+                        <div className="task-prompt__priority">
+                            <button
+                                type="button"
+                                className={`task-prompt__priority-button ${priority === 'Low' ? 'selected' : ''}`}
+                                onClick={() => setPriority('Low')}
+                            >
+                                Low
+                            </button>
+                            
+                            <button
+                                type="button"
+                                className={`task-prompt__priority-button ${priority === 'Medium' ? 'selected' : ''}`}
+                                onClick={() => setPriority('Medium')}
+                            >
+                                Medium
+                            </button>
+                            <button
+                                type="button"
+                                className={`task-prompt__priority-button ${priority === 'High' ? 'selected' : ''}`}
+                                onClick={() => setPriority('High')}
+                            >
+                                High
+                            </button>
+                        </div>
+                    </fieldset>
+
+                    <section className="task-prompt__actions">
+                        <button className="task-prompt__submit-button" type="button" onClick={handleClick}>
+                            Add Task
+                        </button>
+                        <button className="task-prompt__cancel-button" type="button" onClick={handleCancel}>
+                            Cancel
+                        </button>
+                    </section>
+                </form>
+            </dialog>
+        </>
     );
 }

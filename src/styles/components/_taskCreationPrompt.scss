@@ -2,10 +2,21 @@
 
 .task-prompt {
     margin: 0 auto;
+    z-index: 100;
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
     background-color: $color-surface-dark;
-    width: clamp(300px, 30%, 500px);
-    &__title {
-        
+    padding: 20px;
+    width: clamp(300px, 80%, 500px);
+    .task-prompt__header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        &__icon {
+            width: 30px;
+            margin-right: 10px;
+        }
     }
 
     &__form {
@@ -13,89 +24,74 @@
     }
 
     &__section {
-        margin: 20px 0px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    &__label {
-        margin-bottom: 10px;
-        font-size: 16px;
-
-        &--optional {
-            color: $color-surface-mixed-light;
-            font-size: 12px;
-        }
-
-        &--required {
-            color: $color-primary-light;
-            font-size: 12px;
-        }
-    }
-
-    &__input {
-        background-color: $color-surface-medium-dark;
-        font-size: 18px;
-        border: 1px solid $color-surface-mixed-light;
-        width: 100%;
-        padding: 10px 5px;
-        height: 18px;
-        outline: none;
-        height: 40px;
-
-        &:focus {
-            border: 1px solid $color-surface-mixed-lightest;
-        }
-    }
-
-    &__textarea {
-        background-color: $color-surface-medium-dark;
-        width: 100%;
-        font-size: 18px;
-        height: 18px;
-        padding: 10px 5px;
-        resize: none;
-        overflow: hidden;
-        outline: none;
-        border: 1px solid $color-surface-mixed-light;
-        height: 40px;
-
-        &:focus {
-            border: 1px solid $color-surface-mixed-lightest;
-        }
-    }
-    &__subtask-input-container {
-        display: flex;
-        gap: 10px;
-    }
-
-    &__priority {
-
-    }
-
-    &__priority-button {
-        background-color: $color-surface-medium-dark;
-        width: 100px;
-        font-size: 18px;
-        padding: 10px 5px;
-        margin-right: 10px;
-        &.selected {
-            color: $color-surface-dark;
-            background-color: $color-primary-light;
-        }
-    }
-
-    &__add-subtask-button {
-        height: 40px;
-        width: 40px;
-        background-color: $color-primary-light;
-    }
-
-    &__subtask-list {
-        border-top: 1px solid $color-surface-mixed-light;
         margin-top: 10px;
-    }
+        padding: 5px;
 
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        input[type='text'] {
+            background-color: $color-surface-medium-dark;
+            border-bottom: 1px solid $color-surface-mixed-light;
+            width: 100%;
+            padding: 15px 10px;
+            outline: none;
+            height: 40px;
+            border-radius: 0;
+            &:focus {
+                border-bottom: 1px solid $color-surface-mixed-lightest;
+            }
+        }
+        textarea {
+            background-color: $color-surface-medium-dark;
+            width: 100%;
+            padding: 10px 5px;
+            overflow: hidden;
+            outline: none;
+            border-bottom: 1px solid $color-surface-mixed-light;
+            height: 40px;
+            border-radius: 0;
+            &:focus {
+                border-bottom: 1px solid $color-surface-mixed-lightest;
+            }
+        }
+        &__due-date {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            column-gap: 10px;
+            
+            .task-prompt__input__date {
+                grid-column: 1;
+                grid-row: 2;
+            }
+            .task-prompt__input__time {
+                grid-column: 2;
+                grid-row: 2;
+            }
+        }
+        &__priority {
+            .task-prompt__priority-button {
+                background-color: $color-surface-medium-dark;
+                width: 80px;
+                font-size: 18px;
+                padding: 10px 5px;
+                margin-right: 10px;
+                &.selected {
+                    color: $color-surface-dark;
+                    background-color: $color-primary-light;
+                }
+                &:hover {
+                    cursor: pointer;
+                    background-color: $color-surface-medium;
+                }
+            }
+        }
+    }
+    
     &__actions {
         width: 100%;
         display: flex;
