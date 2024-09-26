@@ -19,11 +19,17 @@
         text-decoration: none;
         font-size: 18px;
         padding: 10px 5px;
-        
+        white-space: nowrap;
+
+        p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .sidebar__button--icon {
             justify-self: center;
             width: 25px;
         }
+
         span {  
             display: block;
             justify-self: center;

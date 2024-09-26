@@ -1,9 +1,10 @@
-import { Outlet } from 'react-router-dom';
-import Sidebar from './sidebar';
-export default function Layout({ categories }) {
+import { Outlet, useLoaderData } from 'react-router-dom';
+import Sidebar from './Sidebar';
+export default function Layout() {
+    const { toDoList } = useLoaderData();
     return (
         <>
-            <Sidebar categories={categories}/>
+            <Sidebar categories={toDoList.categories} />
             <main>
                 <Outlet />
             </main>

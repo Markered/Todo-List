@@ -1,5 +1,5 @@
 import { useState } from "react";
-import EllipsisIcon from '../icons/ellipsis-icon.svg?react';
+import EllipsisIcon from '../../icons/ellipsis-icon.svg?react';
 export default function TaskCard({ key, taskDetails, category, deleteTask, openMenuId, setOpenMenuId }) {
     const { id, name, description, dueDate, priority } = taskDetails;
 

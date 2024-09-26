@@ -124,14 +124,23 @@
 /* NEW PALLETE */
 .task-card {
   background-color: #252424;
-  width: clamp(300px, 50%, 500px);
+  width: 100%;
   padding: 15px 10px;
+  margin-bottom: 10px;
   position: relative;
 }
 .task-card__header {
   display: flex;
   justify-content: space-between;
+  gap: 24px;
   align-items: center;
+}
+.task-card__info {
+  display: grid;
+}
+.task-card__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .task-card__due-date {
   color: rgb(189, 179, 179);
@@ -207,6 +216,11 @@
   text-decoration: none;
   font-size: 18px;
   padding: 10px 5px;
+  white-space: nowrap;
+}
+.sidebar a p {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sidebar a .sidebar__button--icon {
   justify-self: center;
@@ -227,46 +241,37 @@
 /** MIXED SURFACE COLORS */
 /* NEW PALLETE */
 .category-card {
+  margin-top: 10px;
   background-color: #1d1c1c;
   width: 400px;
-  padding: 10px;
 }
-.category-card__progress-section {
+.category-card__header-overlay {
+  background-color: rgba(0, 0, 0, 0.2);
   width: 100%;
+  padding: 10px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 1fr auto;
   gap: 10px;
+  overflow: hidden;
 }
-.category-card__progress-section .circle-progress-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: conic-gradient(#124785 50deg, #252424 0deg);
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  position: relative;
+.category-card__header-overlay .category-card__title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
-.category-card__progress-section .circle-progress-bar__inner-circle {
-  display: flex;
+.category-card__actions .category-card__icon {
+  width: 25px;
+}
+.category-card__actions .category-card__menu {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  background-color: #282828;
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
+  background-color: #252424;
 }
-.category-card__progress-section .category-card__task-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+.category-card__actions .category-card__menu li {
+  padding: 5px;
+  cursor: pointer;
 }
-.category-card__progress-section .category-card__task-info p span {
-  text-align: center;
-  font-weight: bold;
-  font-size: 22px;
-  display: block;
+.category-card__body {
+  padding: 10px;
 }
 
 body {

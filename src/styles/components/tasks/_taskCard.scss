@@ -2,8 +2,9 @@
 
 .task-card {
     background-color: $color-surface-dark;
-    width: clamp(300px, 50%, 500px);
+    width: 100%;
     padding: 15px 10px;
+    margin-bottom: 10px;
     position: relative;
     
     &:hover {
@@ -13,15 +14,17 @@
     &__header {
         display: flex;
         justify-content: space-between;
+        gap: 24px;
         align-items: center;
     }
 
     &__info {
-        
+        display: grid;
     }
 
     &__name {
-        
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     &__due-date {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
-import AddTaskIcon from '../icons/addTask-icon.svg?react';
+import AddTaskIcon from '../../icons/addTask-icon.svg?react';
 
 export default function TaskCreationPrompt({ dialogRef, addTask, categoryId }) {
     const [taskName, setTaskName] = useState('');
@@ -68,9 +68,9 @@ export default function TaskCreationPrompt({ dialogRef, addTask, categoryId }) {
                 description: description,
                 dueDate: new Date(dueDate),
                 priority: priority,
+                status: 'To Do',
                 subtasks: subtasks,
                 isCompleted: false,
-                creationDate: new Date()
             });
             handleCancel();
         }

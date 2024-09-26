@@ -1,4 +1,4 @@
-import TaskCard from "./taskCard"
+import TaskCard from "./TaskCard"
 
 export default function TaskList({ category, toDoList, deleteTask, openMenuId, setOpenMenuId }) {
     return (

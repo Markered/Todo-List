@@ -8,11 +8,12 @@ class Subtask {
 }
 
 class Task {
-    constructor(id, name, description, dueDate, priority, subtasks = [], isCompleted = false, creationDate) {
+    constructor(id, name, description, dueDate, status, priority, subtasks = [], isCompleted = false, creationDate = new Date()) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.dueDate = dueDate;
+        this.status = status;
         this.priority = priority;
         this.subtasks = subtasks.map(subtask => new Subtask(subtask.name, subtask.isCompleted));
         this.isCompleted = isCompleted;
@@ -25,11 +26,15 @@ class Task {
 }
 
 class Category {
-    constructor(id = uuidv4(), name, color, tasks = []) {
+    constructor(id = uuidv4(), name, description, color, tasks = [], creationDate = new Date()) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.color = color;
         this.tasks = tasks.map(task => new Task(task.id, task.name, task.description, task.dueDate, task.priority, task.subtasks, task.isCompleted, task.creationDate));
+        this.totalTasks = this.tasks.length;
+        this.dueTasks = this.tasks.filter(task => task.dueDate < new Date());
+        this.creationDate = creationDate;
     }
 
     addTask(task) {
